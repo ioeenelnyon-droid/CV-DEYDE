@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Digital & Portofolio DKV - Dwi Nortyowati</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blueberry: {
+                            50: '#f0f5ff',
+                            100: '#e0eaff',
+                            200: '#b9d0ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                        cream: '#f8fafc',
+                        retro: '#0f172a'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+            overflow-x: hidden;
+        }
+        .falling-item {
+            position: fixed;
+            top: -50px;
+            z-index: 9999;
+            cursor: pointer;
+            user-select: none;
+            animation: fall linear infinite;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+            transition: transform 0.2s;
+        }
+        .falling-item:hover {
+            transform: scale(1.3) rotate(15deg);
+        }
+        @keyframes fall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0.8; }
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #e0eaff; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-cream text-retro antialiased relative">
+
+    <!-- Counter Blueberry & Daun Terklaim -->
+    <div id="game-hud" class="fixed top-4 right-4 z-50 bg-white/90 backdrop-blur-md border border-blueberry-200 px-4 py-2 rounded-full shadow-lg flex items-center gap-3">
+        <div class="flex items-center gap-2">
+            <span class="text-2xl animate-bounce">🫐</span>
+            <span class="text-xs font-bold text-blueberry-800 uppercase">Item Terklaim: <span id="claim-count" class="text-blueberry-600 text-sm">0</span></span>
+        </div>
+        <button onclick="claimBonusModal()" class="bg-blueberry-600 hover:bg-blueberry-700 text-white text-xs font-semibold px-3 py-1 rounded-full shadow transition active:scale-95">
+            Klaim Hadiah!
+        </button>
+    </div>
+
+    <!-- Container Animasi Blueberry & Dedaunan Gugur (Hijau & Hijau Olive) -->
+    <div id="falling-container"></div>
+
+    <!-- Switcher Latar Belakang (16:9) -->
+    <div class="fixed bottom-4 left-4 z-50 bg-white/90 backdrop-blur-md border border-blueberry-200 p-3 rounded-2xl shadow-xl flex flex-col gap-2">
+        <span class="text-xs font-bold text-blueberry-800 uppercase flex items-center gap-1">
+            <i class="fa-solid fa-palette text-blueberry-600"></i> Pilih Tema Latar (16:9)
+        </span>
+        <div class="flex gap-2">
+            <button onclick="setBgTheme('bg1')" class="w-8 h-8 rounded-lg overflow-hidden border-2 border-blueberry-500 hover:scale-110 transition shadow" title="Tema 1">
+                <img src="bg1.jpeg" class="w-full h-full object-cover">
+            </button>
+            <button onclick="setBgTheme('bg2')" class="w-8 h-8 rounded-lg overflow-hidden border-2 border-transparent hover:border-blueberry-500 hover:scale-110 transition shadow" title="Tema 2">
+                <img src="bg2.jpeg" class="w-full h-full object-cover">
+            </button>
+            <button onclick="setBgTheme('bg3')" class="w-8 h-8 rounded-lg overflow-hidden border-2 border-transparent hover:border-blueberry-500 hover:scale-110 transition shadow" title="Tema 3">
+                <img src="bg3.jpeg" class="w-full h-full object-cover">
+            </button>
+            <button onclick="setBgTheme('clean')" class="w-8 h-8 rounded-lg bg-blueberry-50 border-2 border-transparent hover:border-blueberry-500 flex items-center justify-center text-blueberry-700 text-xs font-bold transition shadow" title="Polos">
+                <i class="fa-solid fa-ban"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Layer Background Dynamic -->
+    <div id="bg-layer" class="fixed inset-0 -z-10 transition-all duration-700 opacity-25 bg-cover bg-center pointer-events-none" style="background-image: url('bg1.jpeg');"></div>
+
+    <!-- Wrapper Utama -->
+    <main class="max-w-5xl mx-auto px-4 py-12 md:py-20 flex flex-col gap-16">
+
+        <!-- HERO SECTION -->
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-white/85 backdrop-blur-md border border-blueberry-100 rounded-3xl p-6 md:p-12 shadow-2xl relative overflow-hidden">
+            
+            <!-- Foto Profil Utama Kamu (Photocard Kawaii) -->
+            <div class="md:col-span-5 flex justify-center relative">
+                <div class="relative group">
+                    <div class="absolute -inset-2 bg-gradient-to-r from-blueberry-600 to-blue-300 rounded-3xl blur opacity-30 group-hover:opacity-75 transition duration-500"></div>
+                    <div class="relative w-64 h-80 sm:w-72 sm:h-96 rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-blueberry-50">
+                        <img src="foto_profil.png" alt="Dwi Nortyowati" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm border border-blueberry-200 px-4 py-1.5 rounded-full shadow-md flex items-center gap-2 w-max">
+                        <span class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
+                        <span class="text-xs font-bold text-blueberry-900">DKV Student • Jepara</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Identitas Diri -->
+            <div class="md:col-span-7 flex flex-col justify-center space-y-4 text-center md:text-left">
+                <div class="inline-flex items-center justify-center md:justify-start gap-2 bg-blueberry-100 text-blueberry-800 px-3 py-1 rounded-full text-xs font-semibold w-fit mx-auto md:mx-0">
+                    <i class="fa-solid fa-blueberry text-blueberry-600"></i> Tema Blueberry & DKV Portfolio
+                </div>
+                
+                <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-retro leading-tight">
+                    Dwi <span class="text-blueberry-600 italic">Nortyowati</span>
+                </h1>
+
+                <p class="text-stone-600 text-sm sm:text-base leading-relaxed">
+                    Halo! Selamat datang di CV digital interaktifku. Aku adalah seorang pelajar jurusan <strong class="text-blueberry-700">Desain Komunikasi Visual (DKV)</strong> yang berdomisili di Tahunan, Jepara. Aku memiliki kecintaan mendalam pada ilustrasi digital, desain grafis, dan estetika visual yang kreatif.
+                </p>
+
+                <!-- Data Pribadi -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-sm">
+                    <div class="flex items-center justify-center md:justify-start gap-3 bg-blueberry-50/70 border border-blueberry-100 p-2.5 rounded-xl">
+                        <div class="w-8 h-8 rounded-lg bg-blueberry-200 text-blueberry-800 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-cake-candles"></i>
+                        </div>
+                        <div class="text-left">
+                            <span class="block text-xs text-stone-500 font-medium">Tanggal Lahir</span>
+                            <span class="font-bold text-retro">03 Desember 2009</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-center md:justify-start gap-3 bg-blueberry-50/70 border border-blueberry-100 p-2.5 rounded-xl">
+                        <div class="w-8 h-8 rounded-lg bg-blueberry-200 text-blueberry-800 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div class="text-left">
+                            <span class="block text-xs text-stone-500 font-medium">Tempat Tinggal</span>
+                            <span class="font-bold text-retro">Tahunan, Jepara</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Aksi -->
+                <div class="pt-4 flex flex-wrap gap-3 justify-center md:justify-start">
+                    <a href="#keahlian" class="bg-blueberry-600 hover:bg-blueberry-700 text-white font-semibold px-6 py-2.5 rounded-xl shadow-lg transition text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Lihat Keahlian
+                    </a>
+                    <a href="#kontak" class="bg-white hover:bg-blueberry-50 text-blueberry-800 border border-blueberry-200 font-semibold px-6 py-2.5 rounded-xl transition text-sm flex items-center gap-2">
+                        <i class="fa-regular fa-paper-plane"></i> Hubungi Saya
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- KEAHLIAN SECTION -->
+        <section id="keahlian" class="space-y-8">
+            <div class="text-center space-y-2">
+                <span class="text-xs font-bold text-blueberry-600 uppercase tracking-widest bg-blueberry-100 px-3 py-1 rounded-full">Keahlian DKV</span>
+                <h2 class="font-serif text-3xl font-bold text-retro">Kompetensi & Keahlian Seni</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="bg-white/80 border border-blueberry-100 p-6 rounded-2xl shadow-md hover:shadow-xl transition">
+                    <div class="w-12 h-12 rounded-xl bg-blueberry-100 text-blueberry-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-pen-nib"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-retro mb-2">Ilustrasi & Vector Art</h3>
+                    <p class="text-stone-600 text-sm">Pembuatan karakter, aset vektor, dan ilustrasi digital bertema kawaii & aesthetic.</p>
+                </div>
+
+                <div class="bg-white/80 border border-blueberry-100 p-6 rounded-2xl shadow-md hover:shadow-xl transition">
+                    <div class="w-12 h-12 rounded-xl bg-blueberry-100 text-blueberry-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-paintbrush"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-retro mb-2">Branding & Layout Design</h3>
+                    <p class="text-stone-600 text-sm">Merancang identitas visual, tata letak media cetak/digital, serta estetika merek.</p>
+                </div>
+
+                <div class="bg-white/80 border border-blueberry-100 p-6 rounded-2xl shadow-md hover:shadow-xl transition">
+                    <div class="w-12 h-12 rounded-xl bg-blueberry-100 text-blueberry-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-retro mb-2">Digital Imaging & Editing</h3>
+                    <p class="text-stone-600 text-sm">Pengeditan foto, manipulasi visual, dan pengolahan konten grafis kreatif.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MINI GAME RUNNER -->
+        <section class="bg-white/90 border border-blueberry-200 rounded-3xl p-6 shadow-xl space-y-4">
+            <div class="flex justify-between items-center flex-wrap gap-2">
+                <div>
+                    <span class="text-xs font-bold text-blueberry-600 uppercase bg-blueberry-100 px-3 py-1 rounded-full">Mini Game Interaktif</span>
+                    <h3 class="font-serif text-2xl font-bold text-retro mt-1">Blueberry Catcher Game 🫐🏃</h3>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs font-bold text-stone-500 block">Skor</span>
+                    <span id="game-score" class="text-2xl font-bold text-blue-600">🫐 0</span>
+                </div>
+            </div>
+
+            <div class="relative w-full h-48 bg-gradient-to-b from-blue-50 to-indigo-50 rounded-2xl overflow-hidden border-2 border-blueberry-200 flex items-end justify-center shadow-inner">
+                <canvas id="gameCanvas" class="w-full h-full"></canvas>
+                <button id="startBtn" onclick="startGame()" class="absolute bg-blueberry-600 hover:bg-blueberry-700 text-white font-bold px-6 py-2.5 rounded-full shadow-lg text-sm transition">
+                    ▶️ Mulai Main (Tekan Spasi / Klik Lompat)
+                </button>
+            </div>
+            
+            <div class="flex justify-between items-center text-xs text-stone-500">
+                <p>Lompati rintangan dan kumpulkan buah blueberry sebanyak-banyaknya!</p>
+                <button onclick="jumpPlayer()" class="bg-blueberry-100 hover:bg-blueberry-200 text-blueberry-800 font-bold px-4 py-2 rounded-xl sm:hidden">LOMPAT! ⬆️</button>
+            </div>
+        </section>
+
+        <!-- KONTAK SECTION -->
+        <section id="kontak" class="bg-gradient-to-br from-blueberry-900 to-blueberry-800 text-white rounded-3xl p-8 md:p-12 shadow-2xl text-center space-y-6 relative overflow-hidden">
+            <div class="space-y-2 max-w-lg mx-auto">
+                <span class="bg-blueberry-700 text-blueberry-100 text-xs font-bold px-3 py-1 rounded-full uppercase">Let's Connect</span>
+                <h2 class="font-serif text-3xl font-bold">Hubungi Dwi Nortyowati</h2>
+                <p class="text-blueberry-100 text-sm">Mari terhubung untuk diskusi proyek desain, kolaborasi kreatif, atau penawaran menarik lainnya.</p>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4 pt-2">
+                <a href="mailto:dwinorjpr@gmail.com" class="bg-white text-blueberry-900 font-semibold px-5 py-3 rounded-xl shadow-lg transition flex items-center gap-2 text-sm break-all">
+                    <i class="fa-solid fa-envelope text-blueberry-600 text-base"></i> dwinorjpr@gmail.com
+                </a>
+                <a href="https://www.instagram.com/dwintw._" target="_blank" class="bg-blueberry-800 hover:bg-blueberry-700 border border-blueberry-600 text-white font-semibold px-5 py-3 rounded-xl shadow-lg transition flex items-center gap-2 text-sm">
+                    <i class="fa-brands fa-instagram text-pink-300 text-lg"></i> @dwintw._
+                </a>
+                <a href="https://wa.me/6285712158287" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-3 rounded-xl shadow-lg transition flex items-center gap-2 text-sm">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> 085712158287
+                </a>
+            </div>
+
+            <div class="pt-6 border-t border-blueberry-700/60 text-xs text-blueberry-200 flex flex-col sm:flex-row justify-between items-center gap-2">
+                <p>© 2026 Dwi Nortyowati. DKV Student.</p>
+                <p>Tahunan, Jepara • Lahir 03 Des 2009</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Hadiah -->
+    <div id="bonus-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4 shadow-2xl text-center space-y-4 border border-blueberry-200">
+            <div class="w-16 h-16 bg-blueberry-100 rounded-full flex items-center justify-center mx-auto text-3xl animate-bounce">🫐</div>
+            <h3 class="font-serif text-2xl font-bold text-retro">Hadiah Blueberry & Daun!</h3>
+            <p id="modal-msg" class="text-stone-600 text-sm">Kamu berhasil mengumpulkan item ajaib!</p>
+            <button onclick="closeBonusModal()" class="w-full bg-blueberry-600 hover:bg-blueberry-700 text-white font-semibold py-2.5 rounded-xl transition">Terima Kasih!</button>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        // Animasi Jatuh (Blueberry, Daun Hijau, Daun Hijau Olive)
+        let claimedItems = 0;
+        const fallingPool = [
+            '🫐', 
+            '<span style="color: #2e7d32;">🍃</span>', // Hijau
+            '<span style="color: #556b2f;">🌿</span>'  // Hijau Olive
+        ];
+
+        function createFallingItem() {
+            const container = document.getElementById('falling-container');
+            if (!container) return;
+            const item = document.createElement('div');
+            item.className = 'falling-item';
+            item.innerHTML = fallingPool[Math.floor(Math.random() * fallingPool.length)];
+            const randomX = Math.random() * (window.innerWidth - 40);
+            const duration = Math.random() * 5 + 4;
+            item.style.left = randomX + 'px';
+            item.style.fontSize = (Math.random() * 1.2 + 1.2) + 'rem';
+            item.style.animationDuration = duration + 's';
+
+            item.onclick = function() {
+                claimedItems++;
+                document.getElementById('claim-count').innerText = claimedItems;
+                item.style.transform = 'scale(2)'; item.style.opacity = '0';
+                setTimeout(() => item.remove(), 200);
+            };
+            container.appendChild(item);
+            setTimeout(() => { if (item.parentNode) item.remove(); }, duration * 1000);
+        }
+        setInterval(createFallingItem, 900);
+
+        function setBgTheme(theme) {
+            const bg = document.getElementById('bg-layer');
+            if (theme === 'bg1') bg.style.backgroundImage = "url('bg1.jpeg')";
+            else if (theme === 'bg2') bg.style.backgroundImage = "url('bg2.jpeg')";
+            else if (theme === 'bg3') bg.style.backgroundImage = "url('bg3.jpeg')";
+            else bg.style.backgroundImage = "none";
+        }
+
+        function claimBonusModal() {
+            document.getElementById('modal-msg').innerText = `Kamu telah mengumpulkan ${claimedItems} item blueberry & dedaunan!`;
+            document.getElementById('bonus-modal').classList.remove('hidden');
+        }
+        function closeBonusModal() { document.getElementById('bonus-modal').classList.add('hidden'); }
+
+        // Game Engine
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let gameRunning = false, score = 0, playerY = 110, velocityY = 0, isJumping = false, obstacleX = 400, coinX = 300;
+
+        function startGame() {
+            document.getElementById('startBtn').classList.add('hidden');
+            gameRunning = true; score = 0; obstacleX = canvas.width; coinX = canvas.width + 150;
+            requestAnimationFrame(gameLoop);
+        }
+
+        function jumpPlayer() {
+            if (!isJumping && gameRunning) { velocityY = -10; isJumping = true; }
+        }
+
+        document.addEventListener('keydown', (e) => { if (e.code === 'Space') jumpPlayer(); });
+        canvas.addEventListener('click', jumpPlayer);
+
+        function gameLoop() {
+            if (!gameRunning) return;
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Tanah
+            ctx.fillStyle = '#2563eb'; ctx.fillRect(0, canvas.height - 25, canvas.width, 25);
+
+            // Gravitasi Karakter
+            velocityY += 0.6; playerY += velocityY;
+            if (playerY >= canvas.height - 55) { playerY = canvas.height - 55; isJumping = false; }
+
+            // Karakter Utama 🫐
+            ctx.font = '28px sans-serif'; ctx.fillText('🫐', 50, playerY);
+
+            // Rintangan 📦
+            obstacleX -= 4;
+            if (obstacleX < -30) obstacleX = canvas.width + Math.random() * 200;
+            ctx.fillText('📦', obstacleX, canvas.height - 30);
+
+            // Item Koin 🍃
+            coinX -= 4;
+            if (coinX < -30) coinX = canvas.width + Math.random() * 200;
+            ctx.fillText('🍃', coinX, canvas.height - 75);
+
+            // Cek Tangkap Item
+            if (Math.abs(50 - coinX) < 25 && Math.abs(playerY - (canvas.height - 75)) < 30) {
+                score += 10;
+                document.getElementById('game-score').innerText = '🫐 ' + score;
+                coinX = canvas.width + Math.random() * 200;
+            }
+
+            // Cek Tabrakan Rintangan
+            if (Math.abs(50 - obstacleX) < 20 && playerY > canvas.height - 65) {
+                gameRunning = false;
+                alert('Game Over! Skor Kamu: ' + score);
+                document.getElementById('startBtn').classList.remove('hidden');
+                return;
+            }
+
+            requestAnimationFrame(gameLoop);
+        }
+    </script>
+</body>
+</html>

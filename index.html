@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Dwi Nortyowati - DKV Student</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bb: {
+                            50: '#f0f4fe',
+                            100: '#e0e9fe',
+                            200: '#bae0fd',
+                            300: '#7cc2fb',
+                            400: '#36a2f7',
+                            500: '#2b529a', // Blueberry main
+                            600: '#1d3e7d',
+                            700: '#1e305e',
+                            800: '#111d40',
+                            900: '#0b132b',
+                        },
+                        olive: {
+                            300: '#a3b18a',
+                            500: '#588157', // Olive green main
+                            700: '#3a5a40',
+                            800: '#344e41',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Quicksand', 'sans-serif'],
+                        cute: ['Fredoka', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0f4fe;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2b529a;
+            border-radius: 4px;
+        }
+
+        /* Falling Items Container */
+        #falling-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            overflow: hidden;
+        }
+
+        .falling-item {
+            position: absolute;
+            top: -50px;
+            cursor: pointer;
+            pointer-events: auto;
+            user-select: none;
+            transition: transform 0.2s ease;
+            animation: fall linear infinite;
+        }
+
+        .falling-item:hover {
+            transform: scale(1.3);
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(105vh) rotate(360deg);
+                opacity: 0.8;
+            }
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Glassmorphism effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .glass-dark {
+            background: rgba(17, 29, 64, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen relative overflow-x-hidden">
+
+    <!-- FALLING BLUEBERRIES & LEAVES ANIMATION CONTAINER -->
+    <div id="falling-container"></div>
+
+    <!-- FLOATING SCORE BOARD / COLLECTED COUNTER -->
+    <div class="fixed top-4 right-4 z-50 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border-2 border-bb-300 flex items-center gap-2 font-cute text-bb-700 select-none">
+        <span class="text-xl">🫐</span>
+        <span class="text-xs md:text-sm font-bold">Claimed: <span id="berry-count" class="text-bb-500 text-base">0</span></span>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="max-w-5xl mx-auto px-4 py-8 relative z-10 space-y-12">
+
+        <!-- HEADER BANNER / INTRO SECTION -->
+        <header class="glass-card rounded-3xl p-6 md:p-10 shadow-xl border-2 border-bb-200 relative overflow-hidden">
+            <!-- Background Decorative Grid -->
+            <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#2b529a 1px, transparent 1px); background-size: 16px 16px;"></div>
+
+            <div class="grid md:grid-cols-12 gap-8 items-center relative z-10">
+                
+                <!-- FOTO UTAMA GADIS (FOTO KAMU) -->
+                <div class="md:col-span-5 flex justify-center">
+                    <div class="relative group animate-float">
+                        <!-- Glow behind frame -->
+                        <div class="absolute -inset-3 bg-gradient-to-tr from-bb-400 via-olive-300 to-bb-200 rounded-3xl blur-md opacity-70 group-hover:opacity-100 transition duration-500"></div>
+                        
+                        <!-- Main Photo Box -->
+                        <div class="relative bg-white p-3 rounded-3xl shadow-xl border border-bb-100">
+                            <!-- Foto Dwi Nortyowati (Direct Link / Relative Path GitHub) -->
+                            <img src="./photo.png" 
+                                 onerror="this.onerror=null; this.src='https://placehold.co/400x600/2b529a/ffffff?text=Dwi+Nortyowati';"
+                                 alt="Dwi Nortyowati" 
+                                 class="w-64 h-96 object-cover rounded-2xl shadow-inner border border-slate-100">
+                            
+                            <!-- Kawaii Badge -->
+                            <div class="absolute -bottom-3 -right-2 bg-bb-600 text-white font-cute px-4 py-1.5 rounded-full text-xs shadow-md border-2 border-white flex items-center gap-1.5">
+                                <span>🫐 DKV Enthusiast</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BIODATA SINGKAT & PROFILE HEADER -->
+                <div class="md:col-span-7 space-y-4 text-center md:text-left">
+                    <div class="inline-block px-3 py-1 rounded-full bg-bb-100 text-bb-700 text-xs font-bold tracking-wide uppercase font-cute border border-bb-200">
+                        ✨ Student & Graphic Designer
+                    </div>
+                    
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-bb-900 font-cute tracking-tight">
+                        Dwi Nortyowati
+                    </h1>
+                    
+                    <p class="text-olive-700 font-medium text-lg leading-relaxed">
+                        Siswa Desain Komunikasi Visual (DKV) yang kreatif, bersemangat dalam dunia desain grafis, ilustrasi, dan seni visual.
+                    </p>
+
+                    <!-- QUICK DETAILS -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-sm text-slate-700">
+                        <div class="flex items-center justify-center md:justify-start gap-2.5 bg-white/60 p-2.5 rounded-xl border border-bb-100">
+                            <i class="fa-solid font-bold fa-calendar-day text-bb-500"></i>
+                            <span>Lahir: <strong>03 Desember 2009</strong></span>
+                        </div>
+                        <div class="flex items-center justify-center md:justify-start gap-2.5 bg-white/60 p-2.5 rounded-xl border border-bb-100">
+                            <i class="fa-solid font-bold fa-location-dot text-olive-500"></i>
+                            <span>Tempat: <strong>Tegal Sambi, Jepara</strong></span>
+                        </div>
+                        <div class="flex items-center justify-center md:justify-start gap-2.5 bg-white/60 p-2.5 rounded-xl border border-bb-100">
+                            <i class="fa-solid font-bold fa-graduation-cap text-bb-500"></i>
+                            <span>Jurusan: <strong>DKV (Desain Komunikasi Visual)</strong></span>
+                        </div>
+                        <div class="flex items-center justify-center md:justify-start gap-2.5 bg-white/60 p-2.5 rounded-xl border border-bb-100">
+                            <i class="fa-solid font-bold fa-palette text-olive-500"></i>
+                            <span>Fokus: <strong>UI/UX & Branding</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- ACTION BUTTONS -->
+                    <div class="pt-4 flex flex-wrap justify-center md:justify-start gap-3">
+                        <a href="#contact" class="bg-bb-600 hover:bg-bb-700 text-white font-cute px-6 py-2.5 rounded-full shadow-md hover:shadow-lg transition flex items-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Hubungi Saya
+                        </a>
+                        <button onclick="spawnExtraBerries()" class="bg-olive-500 hover:bg-olive-600 text-white font-cute px-5 py-2.5 rounded-full shadow-md hover:shadow-lg transition flex items-center gap-2">
+                            <span>🫐 Hujan Blueberry!</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+
+        <!-- BACKGROUND PREVIEW / GALLERY (3 FOTO LATAR 16:9) -->
+        <section class="space-y-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-bb-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">1</div>
+                <h2 class="text-2xl font-bold font-cute text-bb-900">Background Aesthetics (16:9)</h2>
+            </div>
+            
+            <p class="text-slate-600 text-sm">3 Gambar latar belakang serasi bertema blueberry & visual art berukuran rasio 16:9:</p>
+
+            <div class="grid md:grid-cols-3 gap-4">
+                <!-- BG CARD 1 -->
+                <div class="glass-card rounded-2xl p-2 shadow-md hover:shadow-xl transition border border-bb-100 group">
+                    <div class="aspect-video w-full overflow-hidden rounded-xl bg-slate-200 relative">
+                        <img src="./bg1.jpg" 
+                             onerror="this.onerror=null; this.src='https://placehold.co/600x337/2b529a/ffffff?text=Blueberry+Seamless+Pattern';"
+                             alt="Blueberry Background Pattern 1" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-3 text-center">
+                        <h3 class="font-bold text-bb-800 text-sm font-cute">Blueberry White Pattern</h3>
+                        <p class="text-xs text-slate-500">Seamless Pattern 16:9</p>
+                    </div>
+                </div>
+
+                <!-- BG CARD 2 -->
+                <div class="glass-card rounded-2xl p-2 shadow-md hover:shadow-xl transition border border-bb-100 group">
+                    <div class="aspect-video w-full overflow-hidden rounded-xl bg-slate-200 relative">
+                        <img src="./bg2.jpg" 
+                             onerror="this.onerror=null; this.src='https://placehold.co/600x337/7cc2fb/ffffff?text=Blueberry+Soft+Blue+Art';"
+                             alt="Blueberry Background Pattern 2" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-3 text-center">
+                        <h3 class="font-bold text-bb-800 text-sm font-cute">Soft Blue Aesthetic</h3>
+                        <p class="text-xs text-slate-500">Soft Pastel 16:9</p>
+                    </div>
+                </div>
+
+                <!-- BG CARD 3 -->
+                <div class="glass-card rounded-2xl p-2 shadow-md hover:shadow-xl transition border border-bb-100 group">
+                    <div class="aspect-video w-full overflow-hidden rounded-xl bg-slate-200 relative">
+                        <img src="./bg3.jpg" 
+                             onerror="this.onerror=null; this.src='https://placehold.co/600x337/3a5a40/ffffff?text=Duck+Sad+Window+Meme';"
+                             alt="Background Aesthetic 3" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-3 text-center">
+                        <h3 class="font-bold text-bb-800 text-sm font-cute">Rainy Duck Art</h3>
+                        <p class="text-xs text-slate-500">Aesthetic Mood 16:9</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KEAHLIAN / SKILLS DKV -->
+        <section class="glass-card rounded-3xl p-6 md:p-8 shadow-xl border-2 border-bb-200 space-y-6">
+            <div class="flex items-center gap-3">
+                <div class="bg-olive-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">2</div>
+                <h2 class="text-2xl font-bold font-cute text-bb-900">Keahlian & Skills DKV</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- DESIGN SKILLS -->
+                <div class="space-y-4">
+                    <h3 class="font-bold text-olive-700 flex items-center gap-2 font-cute border-b border-olive-300 pb-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Keahlian Desain Visual
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                                <span>Desain Grafis & Layouting</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-bb-500 h-full rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                                <span>Tipografi & Branding Logo</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-bb-400 h-full rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                                <span>Ilustrasi Vektor & Digital Art</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-olive-500 h-full rounded-full" style="width: 88%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                                <span>UI/UX Design Concept</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-olive-300 h-full rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SOFTWARE SKILLS -->
+                <div class="space-y-4">
+                    <h3 class="font-bold text-bb-700 flex items-center gap-2 font-cute border-b border-bb-300 pb-2">
+                        <i class="fa-solid fa-laptop-code"></i> Software & Tools
+                    </h3>
+                    
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+                        <div class="p-3 bg-white/70 rounded-xl border border-bb-100 flex items-center gap-3">
+                            <i class="fa-solid fa-pen-nib text-bb-500 text-lg"></i>
+                            <div>
+                                <div class="font-bold text-slate-800 text-xs">CorelDRAW</div>
+                                <div class="text-[10px] text-slate-500">Vector Master</div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-white/70 rounded-xl border border-bb-100 flex items-center gap-3">
+                            <i class="fa-solid fa-image text-bb-500 text-lg"></i>
+                            <div>
+                                <div class="font-bold text-slate-800 text-xs">Adobe Photoshop</div>
+                                <div class="text-[10px] text-slate-500">Photo Editing</div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-white/70 rounded-xl border border-bb-100 flex items-center gap-3">
+                            <i class="fa-solid fa-bezier-curve text-bb-500 text-lg"></i>
+                            <div>
+                                <div class="font-bold text-slate-800 text-xs">Adobe Illustrator</div>
+                                <div class="text-[10px] text-slate-500">Vector Artwork</div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-white/70 rounded-xl border border-bb-100 flex items-center gap-3">
+                            <i class="fa-solid fa-video text-olive-500 text-lg"></i>
+                            <div>
+                                <div class="font-bold text-slate-800 text-xs">CapCut / Premiere</div>
+                                <div class="text-[10px] text-slate-500">Video Editing</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KONTAK & FOOTER -->
+        <section id="contact" class="glass-dark text-white rounded-3xl p-6 md:p-8 shadow-xl space-y-6 relative overflow-hidden">
+            <div class="flex items-center gap-3">
+                <div class="bg-bb-400 text-bb-900 w-8 h-8 rounded-full flex items-center justify-center font-bold">3</div>
+                <h2 class="text-2xl font-bold font-cute text-white">Hubungi Saya</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4">
+                <!-- TELEPON -->
+                <a href="https://wa.me/6285712158287" target="_blank" class="bg-white/10 hover:bg-white/20 p-4 rounded-2xl border border-white/10 transition flex items-center gap-4 group">
+                    <div class="w-12 h-12 rounded-xl bg-bb-500 flex items-center justify-center text-xl text-white group-hover:scale-110 transition">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-bb-200">Telepon / WhatsApp</div>
+                        <div class="font-bold text-sm">085712158287</div>
+                    </div>
+                </a>
+
+                <!-- GMAIL -->
+                <a href="mailto:dwinorjpr@gmail.com" class="bg-white/10 hover:bg-white/20 p-4 rounded-2xl border border-white/10 transition flex items-center gap-4 group">
+                    <div class="w-12 h-12 rounded-xl bg-olive-500 flex items-center justify-center text-xl text-white group-hover:scale-110 transition">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-bb-200">Email Gmail</div>
+                        <div class="font-bold text-sm">dwinorjpr@gmail.com</div>
+                    </div>
+                </a>
+
+                <!-- INSTAGRAM -->
+                <a href="https://instagram.com/dwintw._" target="_blank" class="bg-white/10 hover:bg-white/20 p-4 rounded-2xl border border-white/10 transition flex items-center gap-4 group">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 flex items-center justify-center text-xl text-white group-hover:scale-110 transition">
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-bb-200">Instagram</div>
+                        <div class="font-bold text-sm">dwintw._</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="text-center pt-4 border-t border-white/10 text-xs text-bb-200 font-cute">
+                © CV Aesthetic Dwi Nortyowati • DKV Tegal Sambi, Jepara
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JAVASCRIPT ANIMASI JATUH & INTERAKSI -->
+    <script>
+        let collectedCount = 0;
+        const container = document.getElementById('falling-container');
+        const counterEl = document.getElementById('berry-count');
+
+        // Karakter buah & dedaunan (Blueberry, Daun Hijau, Daun Olive)
+        const items = ['🫐', '🫐', '🫐', '🍃', '🌿', '🌱', '🫐'];
+
+        function createFallingItem() {
+            const item = document.createElement('div');
+            item.className = 'falling-item';
+            
+            // Randomly select icon
+            const randomIcon = items[Math.floor(Math.random() * items.length)];
+            item.innerHTML = randomIcon;
+
+            // Random sizes & positioning
+            const size = Math.random() * 20 + 20; // 20px - 40px
+            const left = Math.random() * 95; // 0% - 95% width
+            const duration = Math.random() * 5 + 4; // 4s - 9s duration
+            const delay = Math.random() * 2; // 0s - 2s delay
+
+            item.style.fontSize = `${size}px`;
+            item.style.left = `${left}vw`;
+            item.style.animationDuration = `${duration}s`;
+            item.style.animationDelay = `${delay}s`;
+
+            // Click / Claim Event
+            item.addEventListener('click', (e) => {
+                collectedCount++;
+                counterEl.innerText = collectedCount;
+                
+                // Pop animation effect
+                createPopEffect(e.clientX, e.clientY, randomIcon);
+                item.remove();
+            });
+
+            container.appendChild(item);
+
+            // Remove item after animation completes to avoid DOM clutter
+            setTimeout(() => {
+                if (item.parentNode) {
+                    item.remove();
+                }
+            }, (duration + delay) * 1000);
+        }
+
+        // Pop Floating Effect when Claimed
+        function createPopEffect(x, y, symbol) {
+            const pop = document.createElement('div');
+            pop.innerText = symbol === '🫐' ? '+1 🫐' : '+1 🌿';
+            pop.style.position = 'fixed';
+            pop.style.left = `${x}px`;
+            pop.style.top = `${y}px`;
+            pop.style.color = '#2b529a';
+            pop.style.fontWeight = 'bold';
+            pop.style.fontFamily = 'Fredoka, sans-serif';
+            pop.style.pointerEvents = 'none';
+            pop.style.zIndex = '100';
+            pop.style.transition = 'all 0.6s ease-out';
+            
+            document.body.appendChild(pop);
+
+            setTimeout(() => {
+                pop.style.transform = 'translateY(-40px) scale(1.3)';
+                pop.style.opacity = '0';
+            }, 20);
+
+            setTimeout(() => {
+                pop.remove();
+            }, 650);
+        }
+
+        // Continuous Spawn Loop
+        setInterval(createFallingItem, 600);
+
+        // Extra Burst Function
+        function spawnExtraBerries() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(createFallingItem, i * 100);
+            }
+        }
+
+        // Initial burst on load
+        window.onload = function() {
+            spawnExtraBerries();
+        };
+    </script>
+</body>
+</html>
